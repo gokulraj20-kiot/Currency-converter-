@@ -1,0 +1,37 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+class SimpleCurrencyConverter {
+    private static Map<String, Double> exchangeRates = new HashMap<>();
+
+    static {
+        exchangeRates.put("USD_EUR", 0.85);
+        exchangeRates.put("EUR_USD", 1.18);
+        exchangeRates.put("USD_GBP", 0.75);
+        exchangeRates.put("GBP_USD", 1.33);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter base currency (e.g., USD): ");
+        String baseCurrency = scanner.nextLine().toUpperCase();
+
+        System.out.print("Enter target currency (e.g., EUR): ");
+        String targetCurrency = scanner.nextLine().toUpperCase();
+
+        System.out.print("Enter amount to convert: ");
+        double amount = scanner.nextDouble();
+
+        String key = baseCurrency + "_" + targetCurrency;
+        Double exchangeRate = exchangeRates.get(key);
+
+        if (exchangeRate != null) {
+            double convertedAmount = amount * exchangeRate;
+            System.out.printf("%.2f %s = %.2f %s\n", amount, baseCurrency, convertedAmount, targetCurrency);
+        } else {
+            System.out.println("Exchange rate not available for the selected currencies.");
+        }
+    }
+}
